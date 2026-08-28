@@ -13,16 +13,17 @@ on:
         default: "true"
         type: choice
         options:
-          - true
+          - "true"
+          - "false"
       environment:
         description: "Target environment"
-        required: true
+        required: false
         default: "QA"
         type: choice
         options:
-          - QA
-          - UAT
-          - PROD
+          - "QA"
+          - "UAT"
+          - "PROD"
 
 jobs:
   test:
@@ -37,7 +38,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'   # ✅ stable LTS version
+          java-version: '17'
 
       - name: Build & Install
         run: mvn -B install -DskipTests --no-transfer-progress
