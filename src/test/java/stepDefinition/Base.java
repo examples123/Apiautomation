@@ -90,7 +90,7 @@ public class Base {
               BT=pw.firefox();
             }
 
-            Browser BR=BT.launch(new BrowserType.LaunchOptions().setHeadless(false));
+            Browser BR=BT.launch();
             pe=BR.newPage();
             pe.navigate(properties.getProperty("url"));
             pe.setDefaultTimeout(1000);
