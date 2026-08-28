@@ -1,0 +1,16 @@
+<suite name="CucumberSuite">
+    <listeners>
+        <listener class-name="LoggingListener"/>
+    </listeners>
+    <test name="MainRun">
+        <classes>
+            <class name="cucumber.options.TestRunner"/>
+        </classes>
+    </test>
+
+    <test name="RerunFailed">
+        <classes>
+            <class name="cucumber.options.RerunFailedTests"/>
+        </classes>
+    </test>
+</suite>
