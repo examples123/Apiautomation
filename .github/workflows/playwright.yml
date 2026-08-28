@@ -5,6 +5,16 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      headless:
+        description: "Run in headless mode"
+        required: false
+        default: "true"
+      environment:
+        description: "Target environment"
+        required: false
+        default: "QA"
 
 jobs:
   test:
@@ -19,7 +29,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'   # ✅ use stable LTS version
+          java-version: '17'   # ✅ stable LTS version
 
       - name: Build & Install
         run: mvn -B install -DskipTests --no-transfer-progress
@@ -27,16 +37,10 @@ jobs:
       - name: Ensure Playwright browsers are installed
         run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
 
-      - name: Run TestNG suite
-        run: mvn test -DsuiteXmlFile=testng.xml
+      - name: Run tests (with system variables)
+        run: mvn test -DsuiteXmlFile=testng.xml -Dheadless=${{ github.event.inputs.headless }} -Denvironment=${{ github.event.inputs.environment }}
 
-      - name: Upload Surefire reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: surefire-reports
-          path: target/surefire-reports/
-
-      - name: Upload Cucumber HTML report
+      - name: Upload reports
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
