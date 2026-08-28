@@ -9,12 +9,20 @@ on:
     inputs:
       headless:
         description: "Run in headless mode"
-        required: false
+        required: true
         default: "true"
+        type: choice
+        options:
+          - true
       environment:
         description: "Target environment"
-        required: false
+        required: true
         default: "QA"
+        type: choice
+        options:
+          - QA
+          - UAT
+          - PROD
 
 jobs:
   test:
