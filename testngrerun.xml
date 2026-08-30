@@ -4,7 +4,7 @@
     </listeners>
     <test name="MainRun">
         <classes>
-            <class name="cucumber.options.TestRunner"/>
+            <class name="cucumber.options.RerunFailedTests"/>
         </classes>
     </test>
 </suite>

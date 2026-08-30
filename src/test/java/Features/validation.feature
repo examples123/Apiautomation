@@ -1,16 +1,22 @@
 Feature: Creating Alert
 
-  @testone
-  Scenario: verify Alert
-    Given Add create Alert PayLoad
-    When  user calls  Create Alert API post Http Request
-    Then Api call is success with statuscode 200
-    And  "success" in responseBody  is "true"
-
-
+Feature: Selecting multiple products from Amazon
 
   @testone
-  Scenario: verify Alert
-    Given Add launchthebrowser
-    When  User Create the event
-    Then  Verify the event name
+  Scenario Outline: Selecting multiple products and ordering
+    Given user logs in with credentials "<Username>" and "<Password>"
+    And user is on home page
+    And user searches for product "Trimmer For men"
+    And user adds "<Productname>" to the cart
+    And validate "<Productname>" is added to cart
+    When user clicks buy the product
+    Then product should be ordered successfully
+    And validate Order ID is generated
+    And user logs out from application
+
+    Examples:
+      | Username | Password | Productname |
+      | Gowtham  | password | Philips     |
+      | Gowtham  | password | Bombay Shaving Company     |
+      | Gowtham  | password | Morphy Richards Kingsman     |
+
